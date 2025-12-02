@@ -94,11 +94,12 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ feature, index }) => {
       className="
         group
         bg-white
-        rounded-2xl
-        p-8 md:p-10
-        shadow-sm hover:shadow-lg
+        rounded-xl
+        p-6 sm:p-8
+        hover:shadow-xl
         transition-all duration-300
         border border-neutral-100
+        hover:border-primary-100
         h-full
         flex flex-col
       "
@@ -107,13 +108,14 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ feature, index }) => {
       <div
         className="
           flex items-center justify-center
-          w-16 h-16 md:w-20 md:h-20
+          w-14 h-14 sm:w-16 sm:h-16
           bg-primary-50
-          rounded-full
-          mb-6 md:mb-8
+          rounded-xl
+          mb-5 sm:mb-6
           flex-shrink-0
           group-hover:bg-primary-100
-          transition-colors duration-200
+          group-hover:scale-110
+          transition-all duration-300
         "
       >
         <Icon
@@ -127,10 +129,10 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ feature, index }) => {
 
       {/* Title */}
       <h3 className="
-        text-xl md:text-2xl
+        text-lg sm:text-xl
         font-semibold
         text-neutral-900
-        mb-4
+        mb-3
         leading-tight
       ">
         {feature.title}
@@ -138,7 +140,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ feature, index }) => {
 
       {/* Description */}
       <p className="
-        text-base md:text-lg
+        text-sm sm:text-base
         text-neutral-600
         leading-relaxed
         flex-grow
@@ -187,8 +189,8 @@ export const Features: React.FC<FeaturesProps> = ({
       ref={sectionRef}
       id="features"
       className="
-        py-20 md:py-24 lg:py-32
-        bg-background-secondary
+        py-16 sm:py-20 md:py-24 lg:py-32
+        bg-neutral-50
       "
       aria-labelledby="features-title"
     >
@@ -230,9 +232,9 @@ export const Features: React.FC<FeaturesProps> = ({
         <div className="
           grid
           grid-cols-1
-          md:grid-cols-2
+          sm:grid-cols-2
           lg:grid-cols-3
-          gap-8 md:gap-10 lg:gap-12
+          gap-6 sm:gap-8 lg:gap-10
         ">
           {features.map((feature, index) => (
             <FeatureCard

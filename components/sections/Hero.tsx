@@ -113,7 +113,7 @@ export const Hero: React.FC<HeroProps> = ({
           {/* Headline */}
           <motion.h1
             variants={itemVariants}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-bold text-neutral-900 mb-6 leading-tight"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-normal text-white mb-6 leading-tight"
           >
             {headline}
           </motion.h1>
@@ -121,7 +121,7 @@ export const Hero: React.FC<HeroProps> = ({
           {/* Subheadline */}
           <motion.p
             variants={itemVariants}
-            className="text-lg sm:text-xl md:text-2xl text-neutral-800 mb-10 max-w-3xl leading-relaxed font-normal"
+            className="text-base sm:text-lg md:text-xl text-white mb-10 max-w-3xl leading-relaxed"
           >
             {subheadline}
           </motion.p>
@@ -137,7 +137,8 @@ export const Hero: React.FC<HeroProps> = ({
               href={primaryCTA.href}
               analyticsId={primaryCTA.analyticsId || 'hero-primary-cta'}
               analyticsLocation="hero"
-              className="w-full sm:w-auto bg-neutral-900 text-white hover:bg-neutral-800"
+              showArrow={true}
+              className="w-full sm:w-auto"
             >
               {primaryCTA.label}
             </Button>
@@ -149,7 +150,7 @@ export const Hero: React.FC<HeroProps> = ({
                 href={secondaryCTA.href}
                 analyticsId={secondaryCTA.analyticsId || 'hero-secondary-cta'}
                 analyticsLocation="hero"
-                className="w-full sm:w-auto text-neutral-900 border-neutral-900 hover:bg-neutral-900 hover:text-white"
+                className="w-full sm:w-auto text-white hover:bg-white/10"
               >
                 {secondaryCTA.label}
               </Button>

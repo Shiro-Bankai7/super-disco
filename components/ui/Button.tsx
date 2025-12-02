@@ -3,102 +3,53 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-/**
- * Button Component
- * 
- * A polymorphic button component that can render as a button or link.
- * Supports multiple variants, sizes, and states with full accessibility.
- * 
- * Requirements:
- * - 3.2: Keyboard navigation support for all clickable components
- * - 5.1: Analytics tracking on CTA clicks
- * - 10.3: High-contrast colors and clear action-oriented copy
- * - 10.4: Minimum 44x44px touch targets
- * 
- * @example
- * <Button variant="primary" size="md" onClick={handleClick}>
- *   Click me
- * </Button>
- * 
- * @example
- * <Button variant="secondary" size="lg" href="/about">
- *   Learn More
- * </Button>
- */
-
 export interface ButtonProps {
-  /** Visual style variant */
   variant?: 'primary' | 'secondary' | 'ghost';
-  /** Size of the button */
   size?: 'sm' | 'md' | 'lg';
-  /** Button content */
   children: React.ReactNode;
-  /** Click handler for button elements */
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  /** URL for link rendering */
   href?: string;
-  /** Accessible label for screen readers */
   ariaLabel?: string;
-  /** Optional icon element */
   icon?: React.ReactNode;
-  /** Disabled state */
+  showArrow?: boolean;
   disabled?: boolean;
-  /** Button type attribute */
   type?: 'button' | 'submit' | 'reset';
-  /** Additional CSS classes */
   className?: string;
-  /** Analytics tracking ID */
   analyticsId?: string;
-  /** Analytics location context */
   analyticsLocation?: string;
 }
 
-/**
- * Get variant-specific styles
- */
 const getVariantStyles = (variant: ButtonProps['variant']) => {
   switch (variant) {
     case 'primary':
-      return 'bg-neutral-900 text-white hover:bg-neutral-800 border border-transparent';
+      return 'bg-neutral-900 !text-white hover:bg-neutral-800';
     case 'secondary':
-      return 'bg-transparent text-white hover:bg-white/10 border border-white';
+      return 'bg-white text-neutral-900 hover:bg-neutral-50';
     case 'ghost':
-      return 'bg-transparent hover:bg-white/10 border border-current';
+      return 'bg-transparent hover:bg-white/10 border border-white/80 !text-white';
     default:
-      return 'bg-neutral-900 text-white hover:bg-neutral-800 border border-transparent';
+      return 'bg-neutral-900 !text-white hover:bg-neutral-800';
   }
 };
 
-/**
- * Get size-specific styles
- * Ensures minimum 44x44px touch target (Requirement 10.4)
- */
 const getSizeStyles = (size: ButtonProps['size']) => {
   switch (size) {
     case 'sm':
-      return 'h-11 px-6 text-sm min-h-[44px] font-medium'; // Improved proportions
+      return 'h-10 px-5 text-sm min-h-[44px]';
     case 'md':
-      return 'h-12 px-8 text-base min-h-[44px] font-medium'; // Better padding
+      return 'h-11 px-6 text-base min-h-[44px]';
     case 'lg':
-      return 'h-14 px-10 text-lg min-h-[44px] font-medium'; // Larger size
+      return 'h-13 px-8 text-lg min-h-[44px]';
     default:
-      return 'h-12 px-8 text-base min-h-[44px] font-medium';
+      return 'h-11 px-6 text-base min-h-[44px]';
   }
 };
 
-/**
- * Get disabled styles
- */
 const getDisabledStyles = (disabled?: boolean) => {
-  return disabled
-    ? 'opacity-50 cursor-not-allowed pointer-events-none'
-    : 'cursor-pointer';
+  return disabled ? 'opacity-50 cursor-not-allowed pointer-events-none' : 'cursor-pointer';
 };
 
-export const Button = React.forwardRef<
-  HTMLButtonElement | HTMLAnchorElement,
-  ButtonProps
->(
+export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
   (
     {
       variant = 'primary',
@@ -108,6 +59,7 @@ export const Button = React.forwardRef<
       href,
       ariaLabel,
       icon,
+      showArrow = false,
       disabled = false,
       type = 'button',
       className = '',
@@ -116,15 +68,9 @@ export const Button = React.forwardRef<
     },
     ref
   ) => {
-    /**
-     * Handle click with analytics tracking (Requirement 5.1)
-     */
-    const handleClick = (
-      event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
-    ) => {
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
       if (disabled) return;
 
-      // Track analytics event
       if (analyticsId && typeof window !== 'undefined' && window.dataLayer) {
         window.dataLayer.push({
           event: 'cta_click',
@@ -136,32 +82,25 @@ export const Button = React.forwardRef<
         });
       }
 
-      // Call provided onClick handler
       if (onClick && !href) {
         onClick(event as React.MouseEvent<HTMLButtonElement>);
       }
     };
 
-    /**
-     * Base styles shared by all buttons
-     * Includes focus states for accessibility (Requirement 3.2)
-     */
     const baseStyles = `
       inline-flex items-center justify-center gap-2
-      rounded-xl
+      font-medium rounded-lg
       transition-all duration-200 ease-in-out
       focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
-      active:scale-[0.98]
-      shadow-sm hover:shadow-md
-      ${getVariantStyles(variant)}
+      active:scale-95
       ${getSizeStyles(size)}
       ${getDisabledStyles(disabled)}
+      ${getVariantStyles(variant)}
       ${className}
-    `.trim().replace(/\s+/g, ' ');
+    `
+      .trim()
+      .replace(/\s+/g, ' ');
 
-    /**
-     * Render as link if href is provided
-     */
     if (href) {
       return (
         <motion.a
@@ -177,13 +116,28 @@ export const Button = React.forwardRef<
         >
           {icon && <span className="flex-shrink-0">{icon}</span>}
           {children}
+          {showArrow && (
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="flex-shrink-0"
+            >
+              <path
+                d="M7.5 15L12.5 10L7.5 5"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          )}
         </motion.a>
       );
     }
 
-    /**
-     * Render as button by default
-     */
     return (
       <motion.button
         ref={ref as React.Ref<HTMLButtonElement>}
@@ -198,6 +152,24 @@ export const Button = React.forwardRef<
       >
         {icon && <span className="flex-shrink-0">{icon}</span>}
         {children}
+        {showArrow && (
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="flex-shrink-0"
+          >
+            <path
+              d="M7.5 15L12.5 10L7.5 5"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        )}
       </motion.button>
     );
   }
@@ -206,3 +178,4 @@ export const Button = React.forwardRef<
 Button.displayName = 'Button';
 
 export default Button;
+ 

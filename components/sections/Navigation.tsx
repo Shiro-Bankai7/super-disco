@@ -195,7 +195,7 @@ export const Navigation: React.FC<NavigationProps> = ({
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-neutral-100"
+      className="fixed top-0 left-0 right-0 z-50 bg-white"
       role="navigation"
       aria-label="Main navigation"
     >
@@ -208,22 +208,21 @@ export const Navigation: React.FC<NavigationProps> = ({
               className="flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg"
               aria-label="BioEnergy home"
             >
-              {/* Logo Icon */}
-              <div className="w-11 h-11 bg-primary-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                <svg
-                  width="28"
-                  height="28"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="text-white"
-                >
-                  <path
-                    d="M12 2C12 2 8 6 8 10C8 13.31 10.69 16 14 16C14 16 14 12 12 10C12 10 14 8 16 10C18 12 18 16 16 18C14 20 10 20 8 18C6 16 6 12 8 10C8 10 10 8 12 6V2Z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </div>
+              {/* Logo SVG */}
+              <svg
+                width="44"
+                height="44"
+                viewBox="0 0 44 44"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="flex-shrink-0"
+              >
+                <rect width="44" height="44" rx="12" fill="#10b981" />
+                <path
+                  d="M22 10C22 10 16 16 16 22C16 27.52 20.48 32 26 32C26 32 26 24 22 20C22 20 26 16 30 20C34 24 34 32 30 36C26 40 18 40 14 36C10 32 10 24 14 20C14 20 18 16 22 12V10Z"
+                  fill="white"
+                />
+              </svg>
               {/* Logo Text */}
               <span className="text-xl font-semibold text-neutral-900">
                 BioEnergy
@@ -232,15 +231,15 @@ export const Navigation: React.FC<NavigationProps> = ({
           </div>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex lg:items-center lg:gap-8">
+          <div className="hidden lg:flex lg:items-center lg:gap-12">
             {links.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleLinkClick(e, link.href)}
                 className="
-                  text-neutral-700 hover:text-neutral-900
-                  font-medium text-base
+                  text-neutral-600 hover:text-neutral-900
+                  font-normal text-base
                   transition-colors duration-200
                   focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-md
                 "
@@ -252,15 +251,14 @@ export const Navigation: React.FC<NavigationProps> = ({
           </div>
 
           {/* Desktop CTA Button */}
-          <div className="hidden lg:block">
+          <div className="hidden lg:block lg:ml-8">
             <Button
               variant={ctaButton.variant || 'primary'}
-              size="sm"
+              size="md"
               href={ctaButton.href}
               onClick={ctaButton.onClick}
               analyticsId="nav-cta"
               analyticsLocation="navigation"
-              className="rounded-lg"
             >
               {ctaButton.label}
             </Button>
@@ -327,24 +325,23 @@ export const Navigation: React.FC<NavigationProps> = ({
             >
               <div className="flex flex-col h-full">
                 {/* Mobile Menu Header */}
-                <div className="flex items-center justify-between p-5 border-b border-neutral-200">
+                <div className="flex items-center justify-between p-5">
                   <div className="flex items-center gap-3">
-                    {/* Logo Icon */}
-                    <div className="w-10 h-10 bg-primary-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="text-white"
-                      >
-                        <path
-                          d="M12 2C12 2 8 6 8 10C8 13.31 10.69 16 14 16C14 16 14 12 12 10C12 10 14 8 16 10C18 12 18 16 16 18C14 20 10 20 8 18C6 16 6 12 8 10C8 10 10 8 12 6V2Z"
-                          fill="currentColor"
-                        />
-                      </svg>
-                    </div>
+                    {/* Logo SVG */}
+                    <svg
+                      width="40"
+                      height="40"
+                      viewBox="0 0 44 44"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="flex-shrink-0"
+                    >
+                      <rect width="44" height="44" rx="12" fill="#10b981" />
+                      <path
+                        d="M22 10C22 10 16 16 16 22C16 27.52 20.48 32 26 32C26 32 26 24 22 20C22 20 26 16 30 20C34 24 34 32 30 36C26 40 18 40 14 36C10 32 10 24 14 20C14 20 18 16 22 12V10Z"
+                        fill="white"
+                      />
+                    </svg>
                     {/* Logo Text */}
                     <span className="text-xl font-semibold text-neutral-900">
                       BioEnergy
@@ -392,7 +389,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                 </div>
 
                 {/* Mobile Menu CTA */}
-                <div className="p-5 border-t border-neutral-200">
+                <div className="p-5">
                   <Button
                     variant={ctaButton.variant || 'primary'}
                     size="lg"
